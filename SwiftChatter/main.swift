@@ -26,23 +26,42 @@ let be_list = ["am", "are", "is", "was", "were", "be", "been"]
 
 // Main APP
 
-print("Non AI Swift Chatbot")
-print("-- version 0.0.2 variant Swift")
-print("-- developed by Joonsung Kim")
-print("\n")
 print("***************************************")
-print("\n\n\n")
+print("     Non AI Swift Chatbot")
+print("     -- version 0.0.2 variant Swift")
+print("     -- developed by Joonsung Kim")
+print("***************************************")
+print("\n\n")
 
 func sys(msg: String) {
-    print("SWIFT SYSTEM:: \(msg)")
+    print("📘 SWIFT SYSTEM:: \(msg)")
+}
+
+func wsys(msg: String) {
+    print("⚠️ SWIFT SYSTEM:: \(msg)")
+}
+
+func esys(msg: String) {
+    print("🛑 SWIFT SYSTEM:: \(msg)")
+}
+
+func qsys(msg: String) {
+    print("📙 SWIFT SYSTEM:: \(msg)")
+}
+
+func gsys(msg: String) {
+    print("📗 GRAMMAR SYSTEM:: \(msg)")
 }
 
 func err(msg: String, app: String) {
-    print("ERROR_\(app):: 📕 \(msg)")
+    print("🛑 ERROR_\(app):: \(msg)")
+}
+
+func log(msg: String) {
+    print("📖 LOG:: \(msg)")
 }
 
 func getUserPre(qst: String) -> String {
-    sys(msg: qst)
     print("\(qst):: ", terminator: "")
     return readLine()!
 }
@@ -108,17 +127,19 @@ func getYN() -> String {
 }
 
 func getName() -> String {
-    sys(msg: "📘 Hey there, what's your name?")
+    qsys(msg: "Hey there, what's your name?")
     let name = getUserPre(qst: "NAME")
     let name_list = name.components(separatedBy: " ")
     var namevar1 = name_list.count - 1
-    var melistlen = me_list.count - 1
+    
     var belistlen = be_list.count - 1
     var tempName:String = "TesterName"
     repeat {
+        var melistlen = me_list.count - 1
         repeat {
             if name_list[namevar1] == me_list[melistlen] {
-                melistlen -= 1
+                tempName = name_list[namevar1 + 2]
+                break
             }
             else {
                 repeat {
@@ -145,18 +166,20 @@ var fullname:String = tempName
 var getYNt:String
 var tempName = getName()
 if (tempName != "error0001_name") {
-    sys(msg: "📘 Okay, is your name \(tempName)?")
+    print("\n")
+    qsys(msg: "Okay, is your name \(tempName)?")
     print("RSPNS:: ", terminator: "")
     getYNt = getYN()
     if getYNt == "yes" {
         fullname = tempName
-        sys(msg: "📗 Good to know! I'll call you \(fullname) from now on.")
-        sys(msg: "📘 Please confirm that this is your name with Yes/No")
+        sys(msg: "Good to know! I'll call you \(fullname) from now on.\n")
+        qsys(msg: "Please confirm that this is your name with Yes/No")
         print("RSPNS:: ", terminator: "")
         getYNt = getYN()
         if getYNt == "yes" {
-            sys(msg: "📗 Great!")
-            sys(msg: "📗 Please enjoy our services :-)")
+            print("\n")
+            sys(msg: "Great!")
+            sys(msg: "Please enjoy our services :-)")
             main_init()
         }
         else {
@@ -168,7 +191,7 @@ if (tempName != "error0001_name") {
     }
 }
 else {
-    sys(msg: "System code Error!!\nPlease contact system administrator.")
+    esys(msg: "System code Error!!\nPlease contact system administrator.")
 }
 
 // let str = "gg"
@@ -188,17 +211,17 @@ func detGrammar(arr: Array<Any>) {
                 if nextword_arr[nextword_arr.count - 2] == "e" && nextword_arr[nextword_arr.count - 1] == "d" {
                     var _:String = "past"
                     let whatdid:String = nextword
-                    sys(msg: "It seems like this is a PAST TENSE.")
-                    sys(msg: "I understood that \(whodid) \(whatdid).")
+                    gsys(msg: "It seems like this is a PAST TENSE.")
+                    gsys(msg: "I understood that \(whodid) \(whatdid).")
                     let whatdid_pres:String = whatdid.replacingOccurrences(of: "ed", with: "")
-                    sys(msg: "You are probably done \(whatdid_pres)ing.")
+                    gsys(msg: "You are probably done \(whatdid_pres)ing.")
                     break
                 }
                 var belistvar:Int = be_list.count - 1
                 var didBV:Int = 0
                 repeat {
                     if nextword == be_list[belistvar] {
-                        sys(msg: "This sentence has a BE VERB.")
+                        gsys(msg: "This sentence has a BE VERB.")
                         let nkc_new:String = arr[arrvar+2] as! String
                         let nkcnew_arr:Array = nkc_new.map { String($0) }
                         let nkc = nkcnew_arr.count
@@ -207,8 +230,8 @@ func detGrammar(arr: Array<Any>) {
                                 var _:String = "pp"
                                 let newverb:String = nextword
                                 let newnoun:String = nkc_new.replacingOccurrences(of: "ing", with: "")
-                                sys(msg: "It seems like this is a VERBAL NOUN.")
-                                sys(msg: "I understood that \(whodid) \(newverb) to \(newnoun).")
+                                gsys(msg: "It seems like this is a VERBAL NOUN.")
+                                gsys(msg: "I understood that \(whodid) \(newverb) to \(newnoun).")
                                 didBV = 1
                                 break
                             }
@@ -226,8 +249,8 @@ func detGrammar(arr: Array<Any>) {
                         var _:String = "pp"
                         let newverb:String = nextword
                         let newnoun:String = nwc_new.replacingOccurrences(of: "ing", with: "")
-                        sys(msg: "It seems like this is a VERBAL NOUN.")
-                        sys(msg: "I understood that \(whodid) \(newverb) to \(newnoun).")
+                        gsys(msg: "It seems like this is a VERBAL NOUN.")
+                        gsys(msg: "I understood that \(whodid) \(newverb) to \(newnoun).")
                         break
                     }
                 }
@@ -237,9 +260,72 @@ func detGrammar(arr: Array<Any>) {
         melistvar = me_list.count - 1
         arrvar -= 1
     } while arrvar > -1
+    
+    arrvar = arr.count - 1
+    var youlistvar:Int = you_list.count - 1
+    repeat {
+        repeat {
+            if arr[arrvar] as! String == you_list[youlistvar] {
+                let whodid:String = "I"
+                let nextword:String = arr[arrvar+1] as! String
+                let nextword_arr:Array = nextword.map { String($0) }
+                // let nwc = nextword_arr.count
+                if nextword_arr[nextword_arr.count - 2] == "e" && nextword_arr[nextword_arr.count - 1] == "d" {
+                    var _:String = "past"
+                    let whatdid:String = nextword
+                    gsys(msg: "It seems like this is a PAST TENSE.")
+                    gsys(msg: "I understood that \(whodid) \(whatdid).")
+                    let whatdid_pres:String = whatdid.replacingOccurrences(of: "ed", with: "")
+                    gsys(msg: "I am probably done \(whatdid_pres)ing.")
+                    break
+                }
+                var belistvar:Int = be_list.count - 1
+                var didBV:Int = 0
+                repeat {
+                    if nextword == be_list[belistvar] {
+                        gsys(msg: "This sentence has a BE VERB.")
+                        let nkc_new:String = arr[arrvar+2] as! String
+                        let nkcnew_arr:Array = nkc_new.map { String($0) }
+                        let nkc = nkcnew_arr.count
+                        if nkc - 3 > 0 {
+                            if nkcnew_arr[nkc - 3] == "i" && nkcnew_arr[nkc - 2] == "n" && nkcnew_arr[nkc - 1] == "g" {
+                                var _:String = "pp"
+                                let newverb:String = nextword
+                                let newnoun:String = nkc_new.replacingOccurrences(of: "ing", with: "")
+                                gsys(msg: "It seems like this is a VERBAL NOUN.")
+                                gsys(msg: "I understood that \(whodid) \(newverb) to \(newnoun).")
+                                didBV = 1
+                                break
+                            }
+                        break
+                        }
+                    }
+                    belistvar -= 1
+                } while belistvar > -1
+                
+                let nwc_new:String = arr[arrvar+2] as! String
+                let nwcnew_arr:Array = nwc_new.map { String($0) }
+                let ncc = nwcnew_arr.count
+                if ncc - 3 > 0 && didBV != 1 {
+                    if nwcnew_arr[ncc - 3] == "i" && nwcnew_arr[ncc - 2] == "n" && nwcnew_arr[ncc - 1] == "g" {
+                        var _:String = "pp"
+                        let newverb:String = nextword
+                        let newnoun:String = nwc_new.replacingOccurrences(of: "ing", with: "")
+                        gsys(msg: "It seems like this is a VERBAL NOUN.")
+                        gsys(msg: "I understood that \(whodid) \(newverb) to \(newnoun).")
+                        break
+                    }
+                }
+            }
+            youlistvar -= 1
+        } while youlistvar > -1
+        youlistvar = me_list.count - 1
+        arrvar -= 1
+    } while arrvar > -1
 }
 
 func main() {
+    var doGram = 1
     let greetings_list = ["Welcome, \(fullname)!", "Hi there, \(fullname)!", "Hiya!", "Type in a command below. :)"]
     print("\n\n")
     let number_rand = Int.random(in: 0...3)
@@ -247,7 +333,6 @@ func main() {
     let command:String = getCmd()
     let command_list = command.components(separatedBy: " ")
     print(command_list)
-    detType(cmd: command)
     
     var isCommand = 0
     var commandinputlistvar = command_input_list.count - 1
@@ -256,9 +341,10 @@ func main() {
         var commandlistvar = command_list.count - 1
         repeat {
             if command_list[commandlistvar] == command_input_list[commandinputlistvar] {
-                sys(msg: "📘 I believe that this is a COMMAND.")
+                sys(msg: "I believe that this is a COMMAND.")
                 isCommand = 1
                 runCommand(cmd: command_input_list[commandinputlistvar])
+                doGram = 0
                 break
             }
             else {
@@ -269,10 +355,14 @@ func main() {
     } while commandinputlistvar > -1
 
     if isCommand == 0 {
-        err(msg: "⚠️ Warning (No such COMMAND)", app: "detCMD")
+        print("\n")
+        err(msg: "Warning (No such COMMAND)", app: "detCMD")
     }
     
-    detGrammar(arr: command_list)
+    if doGram != 0 {
+        detType(cmd: command)
+        detGrammar(arr: command_list)
+    }
 }
 
 func main_init() {
@@ -291,19 +381,20 @@ func detType(cmd: String) {
     // var type:String
     if cmd.hasSuffix(".") {
         // type = "n"
-        sys(msg: "📗 Recieved NORMAL SENTENCE")
+        gsys(msg: "Recieved NORMAL SENTENCE")
     }
     else if cmd.hasSuffix("?") {
         // type = "q"
-        sys(msg: "📗 Recieved QUESTION")
+        gsys(msg: "Recieved QUESTION")
     }
     else if cmd.hasSuffix("!") {
         // type = "e"
-        sys(msg: "📗 Recieved EXCLAMATION")
+        gsys(msg: "Recieved EXCLAMATION")
     }
     else {
         // type = "n"
-        sys(msg: "📗 Recieved NORMAL SENTENCE")
+        gsys(msg: "Recieved NORMAL SENTENCE")
+        wsys(msg: "This may not be accurate!")
     }
 }
 
@@ -316,9 +407,8 @@ func detCmd(command_list: Array<Any>) {
     repeat {
         repeat {
             if command_list[commandlistvar] as! String == command_input_list[commandinputlistvar] {
-                sys(msg: "📗 I believe that this is a COMMAND.")
+                sys(msg: "I believe that this is a COMMAND.")
                 isCommand = 1
-                sys(msg: "📗 Command Detected!!!")
                 runCommand(cmd: command_input_list[commandinputlistvar])
             }
             else {
@@ -338,23 +428,23 @@ func detCmd(command_list: Array<Any>) {
 // function inside chatbot
 
 func clc(msg: String) {
-    print("CALC:: \(msg)")
+    print("📱 CALC:: \(msg)")
 }
 
 func cmd_calc() {
     print("\n\n")
-    print("Swift Calculator")
-    print("-- version 0.0.1")
-    print("-- developed by Joonsung Kim")
-    print("\n")
     print("***************************************")
-    print("\n\n\n")
-    clc(msg: "📘 What kind of calculation would you like to do?")
-    print("\n  1. Addition (+)")
-    print("  2. Subtraction (-)")
-    print("  3. Multiplication (*)")
-    print("  4. Division (/)")
-    print("  99. Go back to main chatbot")
+    print("     Swift Calculator")
+    print("     -- version 0.0.1")
+    print("     -- developed by Joonsung Kim")
+    print("***************************************")
+    print("\n")
+    clc(msg: "What kind of calculation would you like to do?")
+    print("\n  📲 1. Addition (+)")
+    print("  📲 2. Subtraction (-)")
+    print("  📲 3. Multiplication (*)")
+    print("  📲 4. Division (/)")
+    print("  📲 99. Go back to main chatbot")
     print("\n")
     let typeCalc:String = getCmd()
     if typeCalc == "1" {
@@ -402,7 +492,7 @@ func calc_addition() -> String {
         aeqlistvar -= 1
     } while aeqlistvar > -1
     print("\n")
-    return "ADD_ANSWER:: 📔 \(resulta)"
+    return "📲 ADD_ANSWER:: \(resulta)"
 }
 
 func calc_subtraction() -> String {
@@ -420,35 +510,37 @@ func calc_subtraction() -> String {
     // result = Float(a_eq_list[0]) - Float(a_eq_list[1])
     results = 0
     print("\n")
-    return "SUB_ANSWER:: 📔 \(results)"
+    return "📲 SUB_ANSWER:: \(results)"
 }
 
 func calc_multiplication() -> String {
 
-    return "WARNING:: ⚠️ Sorry, but I'm still developing this feature!"
+    return "⚠️ WARNING:: Sorry, but I'm still developing this feature!"
 }
 
 func calc_division() -> String {
 
-    return "WARNING:: ⚠️ Sorry, but I'm still developing this feature!"
+    return "⚠️ WARNING:: Sorry, but I'm still developing this feature!"
 }
 
 func runCommand(cmd: String) {
     if cmd == "weather" {
         // cmd_weather()
-        sys(msg: "⚠️ Weather function is not yet ready.")
+        wsys(msg: "Weather function is not yet ready.")
     }
     else if cmd == "time" {
         // cmd_time()
-        sys(msg: "⚠️ Time function is not yet ready.")
+        wsys(msg: "Time function is not yet ready.")
     }
     else if cmd == "calc" || cmd == "calculator" {
         cmd_calc()
     }
     else if cmd == "help" {
         // cmd_help()
+        wsys(msg: "Help function is not yet ready.")
     }
     else if cmd == "quit" || cmd == "exit" {
+        esys(msg: "QUITTING APPLICATION!!!")
         exit(0)
     }
     else {
