@@ -14,7 +14,7 @@ import Foundation
 import Darwin
 
 let command_input_list = ["weather", "time", "calc", "help", "quit", "exit", "calculator"]
-
+let greeting_list = ["hi", "Hi", "Hello", "hello", "Hi,", "hi,", "hello,", "Hello,", "hi!", "Hi!", "Hello!", "hello!"]
 let yes_list = ["y", "Y", "Yes", "yes", "yeah", "sure", "yep", "yup", "ok", "okay", "k", "Okay", "dd", "ya"]
 let no_list = ["n", "N", "No", "no", "nope", "not really", "Nope", "Not really", "nah", "Nah", "ss"]
 
@@ -200,6 +200,10 @@ else {
 // let arr = str.map { String($0) }
 // print(arr)
 
+func determineGreeting() {
+    
+}
+
 func detGrammar(arr: Array<Any>) {
     var arrvar:Int = arr.count - 1
     var melistvar:Int = me_list.count - 1
@@ -375,8 +379,15 @@ func main() {
     let number_rand = Int.random(in: 0...3)
     sys(msg: "\(greetings_list[number_rand])")
     let command:String = getCmd()
-    let command_list = command.components(separatedBy: " ")
+    var command_list = command.components(separatedBy: " ")
     print(command_list)
+    
+    var lastStr:String = command_list[command_list.count - 1] as! String
+    if lastStr.last! == "!" || lastStr.last! == "?" || lastStr.last! == "." {
+        lastStr.removeLast()
+        command_list.removeLast()
+        command_list.append(lastStr)
+    }
     
     var isCommand = 0
     var commandinputlistvar = command_input_list.count - 1
