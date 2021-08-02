@@ -22,7 +22,9 @@ let me_list = ["me", "i", "I", "Me", "I'll", "I'd", "I've", "I'm"]
 let you_list = ["you", "You", "Chatbot", "chatbot", "thee", "thy", "tu", "you'd", "you've", "You'd", "You've", "You're", "you're", "your", "Your"]
 let he_list = ["he", "his", "He", "His", "He's", "He've", "He'd", "she", "her", "She", "Her", "she's", "she've", "she'd", "they", "their", "They", "Their", "They're", "They've", "They'd"]
 let be_list = ["am", "are", "is", "was", "were", "be", "been"]
-
+let article_list = ["a", "the", "an"]
+let have_list = ["have", "has"]
+let had_list = ["had"]
 
 // Main APP
 
@@ -205,7 +207,8 @@ func detGrammar(arr: Array<Any>) {
         repeat {
             if arr[arrvar] as! String == me_list[melistvar] {
                 let whodid:String = "you"
-                let nextword:String = arr[arrvar+1] as! String
+                var nextword:String = arr[arrvar+1] as! String
+                var nexttwoword:String = arr[arrvar+2] as! String
                 let nextword_arr:Array = nextword.map { String($0) }
                 // let nwc = nextword_arr.count
                 if nextword_arr[nextword_arr.count - 2] == "e" && nextword_arr[nextword_arr.count - 1] == "d" {
@@ -215,8 +218,49 @@ func detGrammar(arr: Array<Any>) {
                     gsys(msg: "I understood that \(whodid) \(whatdid).")
                     let whatdid_pres:String = whatdid.replacingOccurrences(of: "ed", with: "")
                     gsys(msg: "You are probably done \(whatdid_pres)ing.")
+                    
+                    var articlelistvar = article_list.count - 1
+                    repeat {
+                        if nexttwoword == article_list[articlelistvar] {
+                            var objective:String = arr[arrvar+3] as! String
+                            log(msg: "New FUNCTION TESTING")
+                            gsys(msg: "I understood(new) that \(article_list[articlelistvar]) \(objective) was \(whatdid) by \(whodid).")
+                        }
+                        articlelistvar -= 1
+                    } while articlelistvar > -1
                     break
                 }
+                var havelistvar:Int = have_list.count - 1
+                nextword = arr[arrvar+1] as! String
+                print(nextword)
+                repeat {
+                    nexttwoword = arr[arrvar+2] as! String
+                    var nexttwoword_arr:Array = nexttwoword.map { String($0) }
+                    if nextword == have_list[havelistvar] {
+                        if nexttwoword_arr[nexttwoword_arr.count - 2] == "e" && nexttwoword_arr[nexttwoword_arr.count - 1] == "d" {
+                            var _:String = "past"
+                            let whatdid:String = arr[arrvar+2] as! String
+                            gsys(msg: "It seems like this is a PAST PRINCIPLE.")
+                            gsys(msg: "I understood that \(whodid) \(have_list[havelistvar]) \(whatdid).")
+                            let whatdid_pres:String = whatdid.replacingOccurrences(of: "ed", with: "")
+                            gsys(msg: "You are probably done \(whatdid_pres)ing.")
+                            
+                            var nextthreeword:String = arr[arrvar+3] as! String
+                            var articlelistvar = article_list.count - 1
+                            repeat {
+                                if nextthreeword == article_list[articlelistvar] && arrvar+4 < arr.count {
+                                    var objective:String = arr[arrvar+4] as! String
+                                    log(msg: "New FUNCTION TESTING")
+                                    gsys(msg: "I understood(new) that \(article_list[articlelistvar]) \(objective) \(have_list[havelistvar]) been \(whatdid) by \(whodid).")
+                                    break
+                                }
+                                articlelistvar -= 1
+                            } while articlelistvar > -1
+                            break
+                        }
+                    }
+                    havelistvar -= 1
+                } while havelistvar > -1
                 var belistvar:Int = be_list.count - 1
                 var didBV:Int = 0
                 repeat {
@@ -549,3 +593,4 @@ func runCommand(cmd: String) {
 }
 
 main_init()
+
